@@ -1,0 +1,64 @@
+---
+title: "Untitled"
+output: html_document
+---
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+uberjohn <-  read.csv("uber-data-set.csv")
+
+str(uberjohn)
+library(dplyr)
+
+ filter(uberjohn, substr(uberjohn$ID,1,3) == "MON")
+ uberjohn$day[substr(uberjohn$ID,1,3) == "MON"] <- "Monday"
+
+ uberjohn$day[substr(uberjohn$ID,1,3) == "TUE"] <- "Tuesday"
+ uberjohn$day[substr(uberjohn$ID,1,3) == "WED"] <- "Wednesday"
+ uberjohn$day[substr(uberjohn$ID,1,3) == "THU"] <- "Thursday"
+ uberjohn$day[substr(uberjohn$ID,1,3) == "FRI"] <- "Friday"
+ uberjohn$day[substr(uberjohn$ID,1,3) == "SAT"] <- "Saturday"
+ uberjohn$day[substr(uberjohn$ID,1,3) == "SUN"] <- "Sunday"
+ #View(uberjohn)
+ library(scales)
+ percent(mean(uberjohn$Trip_time_Percent, trim = 0, na.rm = FALSE))
+
+ percent(mean(uberjohn$Trip_Mileage_Percent, trim = 0, na.rm = FALSE))
+
+ library(ggplot2)
+
+ p1 <- ggplot(uberjohn, aes(x = Trip_time_Percent, y=Trip_Date), 
+              main = "On Trip Times Expressed as Percent of Total Drive Time") + 
+  geom_point()
+
+ p1 <- ggplot(uberjohn, aes(x = Trip_time_Percent, y=Trip_Date)) + 
+  geom_point() +  
+  coord_flip() + 
+  geom_vline(data data = mean(uberjohn$Trip_time_Percent))
+
+                                                                                            
+                                                                                                             str(uberjohn)
+ uberjohn$Trip_Date <- as.Date(uberjohn$Trip_Date)                                                                                                            
+                                                                                                             
+     uberjohn$Trip_Date <- paste0(uberjohn$Trip_Date, "/2016")                                                                                                        
+ 
+ uberjohn$Trip_Date <- as.character.Date(uberjohn$Trip_Date)
+
+
+uberjohn$Trip_Date <- c(uberjohn$Trip_Date)
+
+
+
+
+```
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE}
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
